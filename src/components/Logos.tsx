@@ -29,6 +29,8 @@ const LOGO_CSS = `
 @keyframes logo-cast    { 0%,100%{transform:rotate(-6deg)} 50%{transform:rotate(4deg)} }
 @keyframes logo-bubble  { 0%{transform:translateY(0) scale(.6);opacity:0} 20%{opacity:.9} 100%{transform:translateY(-50px) scale(1);opacity:0} }
 @keyframes logo-paw     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-1px)} }
+@keyframes logo-stage-in { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+.logo-stage-anim { animation: logo-stage-in 400ms cubic-bezier(0.34,1.56,0.64,1) both; }
 
 .logo-stage{
   position:relative;width:100%;height:100%;background:#fff;color:#111;
@@ -43,7 +45,7 @@ const LOGO_CSS = `
 }
 `;
 
-function useLogoCss() {
+export function useLogoCss() {
   useEffect(() => {
     if (typeof document === "undefined") return;
     if (document.getElementById("logo-css")) return;
@@ -1587,42 +1589,34 @@ const IFishing: FC = () => (
   </div>
 );
 
-// ─── groups & grid renderer ─────────────────────────────
-const GROUP_I: FC[] = [IWire, ITree, ILighthouse, IWoodpecker, IBamboo, IFishing];
-const GROUP_S: FC[] = [SCampfire, SAnts, STreehouse, SFox, SVines, SRain];
-const GROUP_SI: FC[] = [
-  SiBirds,
-  SiGarden,
-  SiFish,
-  SiCat,
-  SiTree,
-  SiMoon,
-  SiSnail,
-  SiButterfly,
+// ─── groups ─────────────────────────────────────────────
+export type LogoItem = { name: string; Component: FC };
+
+export const GROUP_S: LogoItem[] = [
+  { name: "산속 모닥불", Component: SCampfire },
+  { name: "개미 행렬", Component: SAnts },
+  { name: "지붕 위 둥지", Component: STreehouse },
+  { name: "언덕의 여우", Component: SFox },
+  { name: "덩굴의 여정", Component: SVines },
+  { name: "비 오는 날", Component: SRain },
 ];
 
-function LogoRow({ items, mdCols }: { items: FC[]; mdCols: string }) {
-  return (
-    <div className={`grid grid-cols-2 sm:grid-cols-4 ${mdCols} gap-3`}>
-      {items.map((Logo, i) => (
-        <div
-          key={i}
-          className="aspect-square overflow-hidden rounded-lg border border-[var(--border)]"
-        >
-          <Logo />
-        </div>
-      ))}
-    </div>
-  );
-}
+export const GROUP_I: LogoItem[] = [
+  { name: "전깃줄의 새", Component: IWire },
+  { name: "홀로 선 나무", Component: ITree },
+  { name: "등대와 갈매기", Component: ILighthouse },
+  { name: "딱따구리", Component: IWoodpecker },
+  { name: "대나무 숲", Component: IBamboo },
+  { name: "낚시하는 고양이", Component: IFishing },
+];
 
-export default function LogoGrid() {
-  useLogoCss();
-  return (
-    <div className="space-y-6">
-      <LogoRow items={GROUP_I} mdCols="md:grid-cols-6" />
-      <LogoRow items={GROUP_S} mdCols="md:grid-cols-6" />
-      <LogoRow items={GROUP_SI} mdCols="md:grid-cols-8" />
-    </div>
-  );
-}
+export const GROUP_SI: LogoItem[] = [
+  { name: "새들의 쉼터", Component: SiBirds },
+  { name: "지붕 위 정원", Component: SiGarden },
+  { name: "물속의 시", Component: SiFish },
+  { name: "고양이 낮잠", Component: SiCat },
+  { name: "가지 뻗기", Component: SiTree },
+  { name: "달과 여우", Component: SiMoon },
+  { name: "달팽이의 산책", Component: SiSnail },
+  { name: "나비의 하루", Component: SiButterfly },
+];

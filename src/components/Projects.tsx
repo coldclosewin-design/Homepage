@@ -1,4 +1,4 @@
-import LogoGrid from "./Logos";
+import ProjectsTabs from "./ProjectsTabs";
 
 export default function Projects() {
   return (
@@ -7,8 +7,8 @@ export default function Projects() {
         <h2 className="mb-2 text-sm font-medium tracking-widest uppercase text-[var(--accent)]">
           Projects
         </h2>
-        <h3 className="mb-12 text-3xl font-bold tracking-tight">프로젝트</h3>
-        <LogoGrid />
+        <h3 className="mb-8 text-3xl font-bold tracking-tight">프로젝트</h3>
+        <ProjectsTabs />
       </div>
     </section>
   );
